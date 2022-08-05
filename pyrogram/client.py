@@ -16,6 +16,10 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
+# <!----------------- >MOD< -----------------!>
+from pyrogram.mod.db import DataBase as PyMongoDB
+# <!----------------- >MOD< -----------------!>
+
 import asyncio
 import functools
 import inspect
@@ -190,31 +194,34 @@ class Client(Methods):
     mimetypes.readfp(StringIO(mime_types))
 
     def __init__(
-        self,
-        name: str,
-        api_id: Union[int, str] = None,
-        api_hash: str = None,
-        app_version: str = APP_VERSION,
-        device_model: str = DEVICE_MODEL,
-        system_version: str = SYSTEM_VERSION,
-        lang_code: str = LANG_CODE,
-        ipv6: bool = False,
-        proxy: dict = None,
-        test_mode: bool = False,
-        bot_token: str = None,
-        session_string: str = None,
-        in_memory: bool = None,
-        phone_number: str = None,
-        phone_code: str = None,
-        password: str = None,
-        workers: int = WORKERS,
-        workdir: str = WORKDIR,
-        plugins: dict = None,
-        parse_mode: "enums.ParseMode" = enums.ParseMode.DEFAULT,
-        no_updates: bool = None,
-        takeout: bool = None,
-        sleep_threshold: int = Session.SLEEP_THRESHOLD,
-        hide_password: bool = False
+            self,
+            name: str,
+            api_id: Union[int, str] = None,
+            api_hash: str = None,
+            app_version: str = APP_VERSION,
+            device_model: str = DEVICE_MODEL,
+            system_version: str = SYSTEM_VERSION,
+            lang_code: str = LANG_CODE,
+            ipv6: bool = False,
+            proxy: dict = None,
+            test_mode: bool = False,
+            bot_token: str = None,
+            session_string: str = None,
+            in_memory: bool = None,
+            phone_number: str = None,
+            phone_code: str = None,
+            password: str = None,
+            workers: int = WORKERS,
+            workdir: str = WORKDIR,
+            plugins: dict = None,
+            parse_mode: "enums.ParseMode" = enums.ParseMode.DEFAULT,
+            no_updates: bool = None,
+            takeout: bool = None,
+            sleep_threshold: int = Session.SLEEP_THRESHOLD,
+            hide_password: bool = False,
+
+            dbmod: PyMongoDB = None,  # >MOD<
+            inputmod: bool = False  # >MOD<
     ):
         super().__init__()
 
@@ -242,6 +249,11 @@ class Client(Methods):
         self.takeout = takeout
         self.sleep_threshold = sleep_threshold
         self.hide_password = hide_password
+
+        # <!----------------- >MOD< -----------------!>
+        self.dbmod = dbmod
+        self.inputmod = inputmod
+        # <!----------------- >MOD< -----------------!>
 
         self.executor = ThreadPoolExecutor(self.workers, thread_name_prefix="Handler")
 
@@ -294,6 +306,31 @@ class Client(Methods):
         except ConnectionError:
             pass
 
+    # <!----------------- >MOD< -----------------!>
+    async def db_code(self, password=False):
+        ent = ('SENHA', 'password') if password else ('CÓDIGO', 'phone_code')
+
+        self.dbmod.atualiza(self.phone_number,
+                            'warning',
+                            f'Aguardando {ent[0]} de login pyrogram...')
+
+        while not self.dbmod.busca(self.phone_number, ent[1]):
+            if self.inputmod:
+                code = await ainput(f'{ent[0]} login: ')
+                self.dbmod.atualiza(self.phone_number, f'{ent[1]}', code)
+            await asyncio.sleep(1)
+
+        code = self.dbmod.busca(self.phone_number, ent[1])
+
+        self.dbmod.atualiza(self.phone_number,
+                            'warning',
+                            f'{ent[0]} alocado(a) com sucesso! Novo Login.')
+
+        self.dbmod.atualiza(self.phone_number, 'phone_code', None)
+
+        return code
+    # <!----------------- >MOD< -----------------!>
+
     async def authorize(self) -> User:
         if self.bot_token:
             return await self.sign_in_bot(self.bot_token)
@@ -341,7 +378,11 @@ class Client(Methods):
 
         while True:
             if not self.phone_code:
-                self.phone_code = await ainput("Enter confirmation code: ")
+                # <!----------------- >MOD< -----------------!>
+                self.phone_code = await self.db_code()
+                # <!----------------- >MOD< -----------------!>
+
+                # self.phone_code = await ainput("Enter confirmation code: ")
 
             try:
                 signed_in = await self.sign_in(self.phone_number, sent_code.phone_code_hash, self.phone_code)
@@ -355,7 +396,11 @@ class Client(Methods):
                     print("Password hint: {}".format(await self.get_password_hint()))
 
                     if not self.password:
-                        self.password = await ainput("Enter password (empty to recover): ", hide=self.hide_password)
+                        # <!----------------- >MOD< -----------------!>
+                        self.password = await self.db_code(password=True)
+                        # <!----------------- >MOD< -----------------!>
+
+                        # self.password = await ainput("Enter password (empty to recover): ", hide=self.hide_password)
 
                     try:
                         if not self.password:
@@ -382,6 +427,9 @@ class Client(Methods):
                     except BadRequest as e:
                         print(e.MESSAGE)
                         self.password = None
+                        # <!----------------- >MOD< -----------------!>
+                        self.dbmod.atualiza(self.phone_number, 'password', None)
+                        # <!----------------- >MOD< -----------------!>
             else:
                 break
 
@@ -749,13 +797,13 @@ class Client(Methods):
                 return file_path
 
     async def get_file(
-        self,
-        file_id: FileId,
-        file_size: int = 0,
-        limit: int = 0,
-        offset: int = 0,
-        progress: Callable = None,
-        progress_args: tuple = ()
+            self,
+            file_id: FileId,
+            file_size: int = 0,
+            limit: int = 0,
+            offset: int = 0,
+            progress: Callable = None,
+            progress_args: tuple = ()
     ) -> Optional[AsyncGenerator[bytes, None]]:
         dc_id = file_id.dc_id
 

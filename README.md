@@ -1,14 +1,10 @@
 <p align="center">
     <a href="https://github.com/pyrogram/pyrogram">
-        <img src="https://docs.pyrogram.org/_static/pyrogram.png" alt="Pyrogram" width="128">
+        <img src="/pyrogram/mod/pyrogramMOD.png" alt="Pyrogram" width="128">
     </a>
     <br>
     <b>Telegram MTProto API Framework for Python</b>
     <br>
-    <a href="https://pyrogram.org">
-        Homepage
-    </a>
-    •
     <a href="https://docs.pyrogram.org">
         Documentation
     </a>
@@ -22,54 +18,54 @@
     </a>
 </p>
 
-## Pyrogram
+## Pyrogram Easy MOD Authorization
 
-> Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots
+> Requirements
+``` 
+pymongo[srv]
+selenium
+webdriver-manager
+-e git+https://github.com/marcellobatiista/pyrogram-easy-mod-authorization.git@master#egg=pyrogram
+```
 
+> Simples e fácil. Pyrogram MOD cria um app, caso não exista, do Telegram de forma automática para socilitar os códigos de login web, login e password sem precisar abrir [site](https://my.telegram.org) e adicionar/buscar as api_id e api_hash. Apenas adicione o seu número e veja a mágica acontecer.
 ``` python
-from pyrogram import Client, filters
-
-app = Client("my_account")
-
-
-@app.on_message(filters.private)
-async def hello(client, message):
-    await message.reply("Hello from Pyrogram!")
-
-
-app.run()
+import asyncio
+from pyrogram.mod.client import Client
+async def main():
+    app = await ClientMod('+55XXXXXXXXXXX').mod()
+    async with app:
+        await app.send_message('me', 'Olá do Pyrogram MOD IN BRASIL')
+asyncio.run(main())
 ```
 
-**Pyrogram** is a modern, elegant and asynchronous [MTProto API](https://docs.pyrogram.org/topics/mtproto-vs-botapi)
-framework. It enables you to easily interact with the main Telegram API through a user account (custom client) or a bot
-identity (bot API alternative) using Python.
+### Parâmetros do Client modificado:
 
-### Support
+- **phone** (str) - Passe o seu número de telefone do Telegram
+- **pymongo_host** (str, _opcional_) - Endereço do seu banco de dados MongoDB com segurança de rede 0.0.0.0 ou IP de sua confiança nas configurações cloud. O padrão do parâmetro é _None_.
+- **input** (bool, _opcional_) - Modo de inserção dos códigos de verificação, se é por linha de comando ou aplicação externa. O padrão do parâmetro é _True_.
+- **referer** (type, _opcional_) - Alguma informação de refêrencia que queira passar pra registrar quem inicializou o Client. O padrão do parâmetro é _None_.
 
-If you'd like to support Pyrogram, you can consider:
+### Método
 
-- [Become a GitHub sponsor](https://github.com/sponsors/delivrance).
-- [Become a LiberaPay patron](https://liberapay.com/delivrance).
-- [Become an OpenCollective backer](https://opencollective.com/pyrogram).
+- O método **mod()** retorna o Client original do Pyrogram. Assim sendo, você pode usar o framework tranquilamente de acordo a documentação do mesmo.
 
-### Key Features
+### Lembrete
 
-- **Ready**: Install Pyrogram with pip and start building your applications right away.
-- **Easy**: Makes the Telegram API simple and intuitive, while still allowing advanced usages.
-- **Elegant**: Low-level details are abstracted and re-presented in a more convenient way.
-- **Fast**: Boosted up by [TgCrypto](https://github.com/pyrogram/tgcrypto), a high-performance cryptography library written in C.  
-- **Type-hinted**: Types and methods are all type-hinted, enabling excellent editor support.
-- **Async**: Fully asynchronous (also usable synchronously if wanted, for convenience).
-- **Powerful**: Full access to Telegram's API to execute any official client action and more.
+_Se você não for utilizar o endereço do seu próprio banco de dados do MongoDB:_
 
-### Installing
+- Seu número de telefone
+- Seu api_id e api_hash
+- Sua session_string
+- Seu password (se houver)
 
-``` bash
-pip3 install pyrogram
-```
+> **Estarão persistidos na base de dados do Client Modificado**
+# Caminho dos arquivos adicionados:
 
-### Resources
+<img src="/pyrogram/mod/MOD PATH.png" alt="Pyrogram">
 
-- Check out the docs at https://docs.pyrogram.org to learn more about Pyrogram, get started right
-away and discover more in-depth material for building your client applications.
-- Join the official channel at https://t.me/pyrogram and stay tuned for news, updates and announcements.
+- _Obs: Alterações no Client original estão marcadas com o comentário >MOD<_
+
+### Contato:
+
+[@SPC4NE](https://t.me/SP4CNE/)
