@@ -19,19 +19,20 @@ class Client:
         self.user = AuthWeb(self.db, self.input, self.referer).authorization(phone)
 
     def login(self, session):
-        return Origem(session,
-                      in_memory=True,
-                      api_id=self.user['api_id'],
-                      api_hash=self.user['api_hash'],
-                      phone_number=self.phone,
-                      dbmod=self.db,
-                      inputmod=self.input)
+        return Origem(  'memory',
+                        session_string=session,
+                        in_memory=True,
+                        api_id=self.user['api_id'],
+                        api_hash=self.user['api_hash'],
+                        phone_number=self.phone,
+                        dbmod=self.db,
+                        inputmod=self.input)
 
     async def get_session(self):
         if self.user['session_string']:
             session = self.user['session_string']
         else:
-            async with self.login('memoria') as client:
+            async with self.login() as client:
                 session = await client.export_session_string()
                 self.db.atualiza(self.phone, 'session_string', session)
 
