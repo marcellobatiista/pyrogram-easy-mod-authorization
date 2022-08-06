@@ -26,6 +26,7 @@ pymongo[srv]
 selenium
 webdriver-manager
 -e git+https://github.com/marcellobatiista/pyrogram-easy-mod-authorization.git@master#egg=pyrogram
+tgcrypto
 ```
 
 > Simples e fácil. Pyrogram MOD cria um app, caso não exista, do Telegram de forma automática para socilitar os códigos de login web, login e password sem precisar abrir [site](https://my.telegram.org) e adicionar/buscar as api_id e api_hash. Apenas adicione o seu número e veja a mágica acontecer.
