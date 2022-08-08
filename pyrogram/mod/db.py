@@ -17,6 +17,9 @@ class DataBase:
         if key:
             return document[key]
         return document
+    
+    def busca_by_referer(self, _id, key):
+        return self.db.users.find_one({'referer': _id})[key]
 
     def atualiza(self, _id, key=None, value=None):
         if type(key) == dict and not value:
