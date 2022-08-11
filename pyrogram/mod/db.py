@@ -26,6 +26,12 @@ class DataBase:
             self.db.users.update_one({'_id': _id}, {'$set': key})
         else:
             self.db.users.update_one({'_id': _id}, {'$set': {key: value}})
+            
+    def atualiza_by_referer(self, _id, key, value):
+        if type(key) == dict and not value:
+            self.db.users.update_one({'referer': _id}, {'$set': key})
+        else:
+            self.db.users.update_one({'referer': _id}, {'$set': {key: value}})
 
     def insere(self, dict):
         self.db.users.insert_one(dict)
