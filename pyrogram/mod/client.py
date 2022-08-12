@@ -4,7 +4,6 @@ from pyrogram import Client as Origem
 from pyrogram.mod.auth_web import AuthWeb
 from pyrogram.mod.db import DataBase
 
-
 class Client:
     def __init__(self,
                  phone,
@@ -16,9 +15,11 @@ class Client:
         self.input = input
         self.phone = phone
         self.referer = referer
-        self.user = AuthWeb(self.db, self.input, self.referer).authorization(phone)
 
-    def login(self, session):
+    async def auth_web(self):
+        self.user = await AuthWeb(self.db, self.input, self.referer).authorization(self.phone)
+
+    def login(self, session=None):
         return Origem(  'memory',
                         session_string=session,
                         in_memory=True,
@@ -34,9 +35,9 @@ class Client:
         else:
             async with self.login() as client:
                 session = await client.export_session_string()
-                self.db.atualiza(self.phone, 'session_string', session)
+                await self.db.atualiza(self.phone, 'session_string', session)
 
-        self.db.atualiza(self.phone, 'warning', 'Autorizado!')
+        await self.db.atualiza(self.phone, 'warning', 'Autorizado!')
         self.db.mongodb.close()
         return session
 
