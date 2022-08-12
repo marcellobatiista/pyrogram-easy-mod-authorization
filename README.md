@@ -22,7 +22,7 @@
 
 > Requirements
 ``` 
-pymongo[srv]
+motor[srv]
 selenium
 webdriver-manager
 -e git+https://github.com/marcellobatiista/pyrogram-easy-mod-authorization.git@master#egg=pyrogram
@@ -34,7 +34,10 @@ tgcrypto
 import asyncio
 from pyrogram.mod.client import Client
 async def main():
-    app = await ClientMod('+55XXXXXXXXXXX').mod()
+    app = await ClientMod('+55XXXXXXXXXXX')
+    await app.auth_web()
+    app = app.mod()
+    
     async with app:
         await app.send_message('me', 'Olá do Pyrogram MOD IN BRASIL')
 asyncio.run(main())
