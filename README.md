@@ -36,7 +36,7 @@ from pyrogram.mod.client import Client
 async def main():
     app = await ClientMod('+55XXXXXXXXXXX')
     await app.auth_web()
-    app = app.mod()
+    app = await app.mod()
     
     async with app:
         await app.send_message('me', 'Olá do Pyrogram MOD IN BRASIL')
