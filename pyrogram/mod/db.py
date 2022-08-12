@@ -19,7 +19,10 @@ class DataBase:
 
     async def busca_by_referer(self, _id, key):
         result = await self.db.users.find_one({'referer': _id})
-        return result[key]
+        try:
+            return result[key]
+        except KeyError:
+            return {}
 
     async def atualiza(self, _id, key=None, value=None):
         if type(key) == dict and not value:
