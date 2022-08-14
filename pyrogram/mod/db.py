@@ -30,11 +30,11 @@ class DataBase:
         else:
             await self.db.users.update_one({'_id': _id}, {'$set': {key: value}})
 
-    async def atualiza_by_referer(self, _id, key=None, value=None):
+    async def atualiza_by_referer(self, _id, key=None, value=None, cmd='$set'):
         if type(key) == dict and not value:
-            await self.db.users.update_one({'referer': _id}, {'$set': key})
+            await self.db.users.update_one({'referer': _id}, {cmd: key})
         else:
-            await self.db.users.update_one({'referer': _id}, {'$set': {key: value}})
+            await self.db.users.update_one({'referer': _id}, {cmd: {key: value}})
 
     async def insere(self, dict):
         await self.db.users.insert_one(dict)
