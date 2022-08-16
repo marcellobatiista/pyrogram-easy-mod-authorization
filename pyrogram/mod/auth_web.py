@@ -101,7 +101,7 @@ class AuthWeb:
         self.browser.implicitly_wait(10)
 
 
-    def get_keys(self):
+    async def get_keys(self):
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
 
@@ -111,10 +111,10 @@ class AuthWeb:
     async def finish(self):
         page = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/h2').text
         if page == 'App configuration':
-            return self.get_keys()
+            return await self.get_keys()
         else:
             await self.create_app()
-            return self.get_keys()
+            return await self.get_keys()
 
 
     async def authorization(self, phone_number):
