@@ -20,8 +20,8 @@ class AuthWeb:
         options.add_argument("--no-sandbox")
 
 
-        path = Service(ChromeDriverManager().install())
-        self.browser = webdriver.Chrome(service=path, options=options)
+        path = ChromeDriverManager().install()
+        self.browser = webdriver.Chrome(executable_path=path, options=options)
 
         self.browser.get('https://my.telegram.org/auth')
 
