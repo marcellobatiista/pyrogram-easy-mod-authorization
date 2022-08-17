@@ -103,7 +103,12 @@ class AuthWeb:
 
     async def get_keys(self):
         teste = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span')
+        
         print(teste)
+        teste.click()
+        alert = world.browser.switch_to.alert
+        alert.accept()
+        
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
 
@@ -113,10 +118,8 @@ class AuthWeb:
     async def finish(self):
         page = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/h2').text
         if page == 'App configuration':
-            print('pagina de config')
             return await self.get_keys()
         else:
-            print('pagina inicial')
             await self.create_app()
             print('criou ok')
             return await self.get_keys()
