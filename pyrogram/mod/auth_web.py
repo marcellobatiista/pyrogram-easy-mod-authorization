@@ -105,7 +105,7 @@ class AuthWeb:
         teste = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span')
         
         print(teste)
-        alert = self.browser.switch_to.alert()
+        alert = self.browser.switch_to.alert
         alert.accept()
         
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
