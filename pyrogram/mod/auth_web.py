@@ -103,7 +103,7 @@ class AuthWeb:
         create.click()
         
         print('fim')
-
+        await asyncio.sleep(10)
         self.browser.implicitly_wait(10)
 
 
@@ -120,6 +120,7 @@ class AuthWeb:
             return await self.get_keys()
         else:
             await self.create_app()
+            print('opa')
             return await self.get_keys()
 
 
