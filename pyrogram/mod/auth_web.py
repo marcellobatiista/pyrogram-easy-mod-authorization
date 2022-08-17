@@ -91,20 +91,23 @@ class AuthWeb:
         random_names = str(uuid.uuid4()).split('-')
         app_title = self.browser.find_element(By.ID, 'app_title')
         app_title.send_keys(random_names[-1])
-
+        
+        print('titulo')
+        
         short_name = self.browser.find_element(By.ID, 'app_shortname')
         short_name.send_keys(random_names[0])
-
+        
+        print('nome')
+        
         create = self.browser.find_element(By.ID, 'app_save_btn')
         create.click()
+        
+        print('fim')
 
         self.browser.implicitly_wait(10)
 
 
     async def get_keys(self):
-        alert = self.browser.switch_to.alert  # tmp
-        alert.accept()  # tmp
-        
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
 
@@ -143,6 +146,7 @@ class AuthWeb:
         try:
             await self.click_app()
             keys = await self.finish()
+            print(keys)
         except selenium.common.exceptions.NoSuchElementException:
             keys = {'api_id': None, 'api_hash': None}
 
