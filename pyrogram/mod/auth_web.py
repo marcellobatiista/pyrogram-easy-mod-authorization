@@ -120,6 +120,8 @@ class AuthWeb:
         
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
+        
+        print(api_id, api_hash)
 
         return {'api_id': api_id, 'api_hash': api_hash}
 
