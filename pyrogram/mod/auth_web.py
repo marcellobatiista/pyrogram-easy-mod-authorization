@@ -109,7 +109,7 @@ class AuthWeb:
 
     async def get_keys(self):
         # Store the alert in a variable for reuse
-        alert = driver.switch_to.alert
+        alert = self.browser.switch_to.alert
 
         # Store the alert text in a variable
         text = alert.text
