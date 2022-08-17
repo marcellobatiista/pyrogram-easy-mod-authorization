@@ -92,6 +92,7 @@ class AuthWeb:
         app_title = self.browser.find_element(By.ID, 'app_title')
         app_title.send_keys(random_names[-1])
         
+        print(random_names[-1])
         print('titulo')
         
         short_name = self.browser.find_element(By.ID, 'app_shortname')
