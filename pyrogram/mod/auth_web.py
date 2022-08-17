@@ -113,9 +113,12 @@ class AuthWeb:
     async def finish(self):
         page = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/h2').text
         if page == 'App configuration':
+            print('pagina de config')
             return await self.get_keys()
         else:
+            print('pagina inicial')
             await self.create_app()
+            print('criou ok')
             return await self.get_keys()
 
 
