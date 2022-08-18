@@ -6,6 +6,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
+from urllib.request import urlopen
+
 
 class AuthWeb:
     def __init__(self, db, input, referer):
@@ -102,6 +104,9 @@ class AuthWeb:
 
 
     async def get_keys(self):
+        
+        html = urlopen(self.browser.current_url)
+        print(html.read())
         
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
