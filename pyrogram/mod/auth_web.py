@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-from urllib.request import urlopen
+# from urllib.request import urlopen
 
 
 class AuthWeb:
