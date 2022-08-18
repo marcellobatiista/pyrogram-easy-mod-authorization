@@ -111,6 +111,7 @@ class AuthWeb:
 
         # Press the Cancel button
         alert.dismiss()
+        await create_app()
         
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
