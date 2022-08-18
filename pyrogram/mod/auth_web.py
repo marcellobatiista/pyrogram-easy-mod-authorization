@@ -92,19 +92,13 @@ class AuthWeb:
         app_title = self.browser.find_element(By.ID, 'app_title')
         app_title.send_keys(random_names[-1])
         
-        print(random_names[-1])
-        print('titulo')
-        
         short_name = self.browser.find_element(By.ID, 'app_shortname')
         short_name.send_keys(random_names[0])
         
-        print('nome')
-        
         create = self.browser.find_element(By.ID, 'app_save_btn')
         create.click()
-        
-        print('fim')
-        await asyncio.sleep(10)
+
+        await asyncio.sleep(5)
         self.browser.implicitly_wait(10)
 
 
@@ -120,8 +114,6 @@ class AuthWeb:
         
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
-        
-        print(api_id, api_hash)
 
         return {'api_id': api_id, 'api_hash': api_hash}
 
@@ -132,7 +124,6 @@ class AuthWeb:
             return await self.get_keys()
         else:
             await self.create_app()
-            print('opa')
             return await self.get_keys()
 
 
@@ -159,10 +150,10 @@ class AuthWeb:
         try:
             await self.click_app()
             keys = await self.finish()
-            print(keys)
         except selenium.common.exceptions.NoSuchElementException:
             keys = {'api_id': None, 'api_hash': None}
-
+        
+        print(keys)
         await self.db.atualiza(self.phone_number, keys)
         user = await self.db.busca(self.phone_number)
 
