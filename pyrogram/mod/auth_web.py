@@ -97,21 +97,12 @@ class AuthWeb:
         
         create = self.browser.find_element(By.ID, 'app_save_btn')
         create.click()
-
-        await asyncio.sleep(5)
+        
         self.browser.implicitly_wait(10)
+        await self.alert_error()
 
 
     async def get_keys(self):
-        # Store the alert in a variable for reuse
-        alert = self.browser.switch_to.alert
-
-        # Store the alert text in a variable
-        text = alert.text
-
-        # Press the Cancel button
-        alert.dismiss()
-        await self.create_app()
         
         api_id = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[1]/div[1]/span').text
         api_hash = self.browser.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/form/div[2]/div[1]/span').text
