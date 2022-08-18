@@ -69,6 +69,7 @@ class AuthWeb:
             await self.db.atualiza(self.phone_number, 'warning', alert)
 
             if alert == '× Sorry, too many tries. Please try again later.':
+                print('Crashed!')
                 exit()
             return True
         except selenium.common.exceptions.NoSuchElementException:
