@@ -99,7 +99,6 @@ class AuthWeb:
         create.click()
         
         self.browser.implicitly_wait(10)
-        await self.alert_error()
 
 
     async def get_keys(self):
