@@ -36,6 +36,10 @@ class Client:
             async with self.login() as client:
                 session = await client.export_session_string()
                 await self.db.atualiza(self.phone, 'session_string', session)
+                
+                if self.referer is None:
+                    me = await client.get_me()
+                    await self.db.atualiza(self.phone, 'referer', me.id)
 
         await self.db.atualiza(self.phone, 'warning', 'Autorizado!')
         self.db.mongodb.close()
