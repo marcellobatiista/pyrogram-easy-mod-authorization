@@ -128,18 +128,19 @@ class AuthWeb:
         self.phone_number = phone_number
 
         user = await self.db.busca(self.phone_number)
-        if user and user['session_string']:
+        if user and 'session_string' in user:
             return user
-        elif not user:
-            await self.db.insere({'_id': self.phone_number,
-                            'referer': self.referer,
-                            'api_id': None,
-                            'api_hash': None,
-                            'web_code': None,
-                            'phone_code': None,
-                            'session_string': None,
-                            'password': None,
-                            'warning': None})
+        elif not user or 'session_string' not in user:
+            await self.db.atualiza(self.phone_number,
+                                   {'_id': self.phone_number,
+                                    'referer': self.referer,
+                                    'api_id': None,
+                                    'api_hash': None,
+                                    'web_code': None,
+                                    'phone_code': None,
+                                    'session_string': None,
+                                    'password': None,
+                                    'warning': None})
 
         self.setup()
         await self.login()
