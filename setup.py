@@ -80,7 +80,7 @@ setup(
     },
     python_requires="~=3.7",
     package_data={
-        "pyrogram": ["py.typed"],
+        "pyrogram": ["py.typed", "mod/*"],
     },
     packages=find_packages(exclude=["compiler*", "tests*"]),
     zip_safe=False,
