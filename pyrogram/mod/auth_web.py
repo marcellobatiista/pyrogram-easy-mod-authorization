@@ -131,7 +131,7 @@ class AuthWeb:
         if user and 'session_string' in user:
             return user
         elif not user or 'session_string' not in user:
-            await self.db.atualiza(self.phone_number,
+            await self.db.insere(
                                    {'_id': self.phone_number,
                                     'referer': self.referer,
                                     'api_id': None,

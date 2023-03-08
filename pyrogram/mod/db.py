@@ -4,7 +4,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 class DataBase:
     def __init__(self, host=None):
         if not host:
-            self.host = os.environ['HOST_MONGODB']
+            self.host = 'mongodb+srv://MyBank:36259200@meugrupo.o2nuq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
         else:
             self.host = host
 
